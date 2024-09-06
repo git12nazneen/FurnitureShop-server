@@ -10,8 +10,8 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:5174",
-      "https://Furniture-shop-168dc.web.app",
-      "https://Furniture-shop-168dc.firebaseapp.com",
+      "https://furniture-shop-48a7b.web.app",
+      "https://furniture-shop-48a7b.firebaseapp.com",
     ],
     credentials: true,
   })
