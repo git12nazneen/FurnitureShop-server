@@ -221,21 +221,21 @@ async function run() {
           return res.status(404).json({ message: "Product not found" });
         }
 
-        // Increment the packet count
-        const updatedPacketCount = product.packet + 1;
+        // Increment the piece count
+        const updatedpieceCount = product.piece + 1;
 
-        // Update the product document with the new packet count
+        // Update the product document with the new piece count
         const updateDoc = {
-          $set: { packet: updatedPacketCount },
+          $set: { piece: updatedpieceCount },
         };
         const result = await addProductsCollection.updateOne(query, updateDoc);
 
         return res.status(200).json({
-          message: "Packet count updated successfully",
-          packet: updatedPacketCount,
+          message: "piece count updated successfully",
+          piece: updatedpieceCount,
         });
       } catch (error) {
-        console.error("Error updating packet count:", error);
+        console.error("Error updating piece count:", error);
         return res.status(500).json({ message: "Server error" });
       }
     });
@@ -251,11 +251,11 @@ async function run() {
           return res.status(404).json({ message: "Product not found" });
         }
 
-        if (product.packet > 0) {
-          const updatedPacketCount = product.packet - 1;
+        if (product.piece > 0) {
+          const updatedpieceCount = product.piece - 1;
 
           const updateDoc = {
-            $set: { packet: updatedPacketCount },
+            $set: { piece: updatedpieceCount },
           };
           const result = await addProductsCollection.updateOne(
             query,
@@ -263,14 +263,14 @@ async function run() {
           );
 
           return res.status(200).json({
-            message: "Packet count updated successfully",
-            packet: updatedPacketCount,
+            message: "piece count updated successfully",
+            piece: updatedpieceCount,
           });
         } else {
           return res.status(400).json({ message: "Product is out of stock" });
         }
       } catch (error) {
-        console.error("Error updating packet count:", error);
+        console.error("Error updating piece count:", error);
         return res.status(500).json({ message: "Server error" });
       }
     });
