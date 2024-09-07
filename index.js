@@ -209,6 +209,8 @@ async function run() {
         ? res.status(200).send({ message: "Product deleted successfully" })
         : res.status(404).send({ message: "Product not found" });
     });
+
+
     // products update increment
     app.patch("/products/:id/increment", verifyToken, async (req, res) => {
       const id = req.params.id;
@@ -298,7 +300,23 @@ async function run() {
       const result = await cardAddCollection.find().toArray();
       res.send(result);
     });
-
+   // product delete by customer
+    // Example: DELETE /products/:id
+    app.delete('/cards/:id', async (req, res) => {
+      const id = req.params.id;
+      const ObjectId = require('mongodb').ObjectId;
+    
+      try {
+        const result = await cardAddCollection.deleteOne({ _id: new ObjectId(id) });
+        if (result.deletedCount === 1) {
+          res.status(200).json({ message: 'Product deleted successfully' });
+        } else {
+          res.status(404).json({ message: 'Product not found' });
+        }
+      } catch (error) {
+        res.status(500).json({ message: 'Error deleting product', error });
+      }
+    });
     // Get An User Data
     app.get("/cards/:email", async (req, res) => {
       const email = req.params.email;
