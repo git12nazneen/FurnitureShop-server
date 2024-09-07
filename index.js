@@ -289,18 +289,7 @@ async function run() {
       const result = await addCardsCollection.find().toArray();
       res.send(result);
     });
-    // card posting
-    app.post("/cardAdd", verifyToken, async (req, res) => {
-      const item = req.body;
-      const result = await cardAddCollection.insertOne(item);
-      res.send(result);
-    });
-    // card get
-    app.get("/cardAdd", async (req, res) => {
-      const result = await cardAddCollection.find().toArray();
-      res.send(result);
-    });
-   // product delete by customer
+       // product delete by customer
     // Example: DELETE /products/:id
   
 app.delete('/cards/:id', async (req, res) => {
@@ -313,7 +302,7 @@ app.delete('/cards/:id', async (req, res) => {
 
   try {
     // Try to delete the document by _id
-    const result = await cardAddCollection.deleteOne({ _id: new ObjectId(id) });
+    const result = await addCardsCollection.deleteOne({ _id: new ObjectId(id) });
     
     if (result.deletedCount === 1) {
       return res.status(200).json({ message: 'Product deleted successfully' });
@@ -325,6 +314,18 @@ app.delete('/cards/:id', async (req, res) => {
     return res.status(500).json({ message: 'Error deleting product', error });
   }
 });
+    // card posting
+    app.post("/cardAdd", verifyToken, async (req, res) => {
+      const item = req.body;
+      const result = await cardAddCollection.insertOne(item);
+      res.send(result);
+    });
+    // card get
+    app.get("/cardAdd", async (req, res) => {
+      const result = await cardAddCollection.find().toArray();
+      res.send(result);
+    });
+
     // Get An User Data
     app.get("/cards/:email", async (req, res) => {
       const email = req.params.email;
