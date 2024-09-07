@@ -302,21 +302,29 @@ async function run() {
     });
    // product delete by customer
     // Example: DELETE /products/:id
-    app.delete('/cards/:id', async (req, res) => {
-      const id = req.params.id;
-      const ObjectId = require('mongodb').ObjectId;
+  
+app.delete('/cards/:id', async (req, res) => {
+  const id = req.params.id;
+
+  // Check if id is a valid ObjectId
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'Invalid ID format' });
+  }
+
+  try {
+    // Try to delete the document by _id
+    const result = await cardAddCollection.deleteOne({ _id: new ObjectId(id) });
     
-      try {
-        const result = await cardAddCollection.deleteOne({ _id: new ObjectId(id) });
-        if (result.deletedCount === 1) {
-          res.status(200).json({ message: 'Product deleted successfully' });
-        } else {
-          res.status(404).json({ message: 'Product not found' });
-        }
-      } catch (error) {
-        res.status(500).json({ message: 'Error deleting product', error });
-      }
-    });
+    if (result.deletedCount === 1) {
+      return res.status(200).json({ message: 'Product deleted successfully' });
+    } else {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+  } catch (error) {
+    // Send a 500 error if something goes wrong with the database operation
+    return res.status(500).json({ message: 'Error deleting product', error });
+  }
+});
     // Get An User Data
     app.get("/cards/:email", async (req, res) => {
       const email = req.params.email;
