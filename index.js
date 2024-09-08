@@ -180,14 +180,16 @@ async function run() {
       const updatedDoc = {
         $set: {
           name: items.name,
-          company: items.company,
+          
           price: items.price,
-          doses: items.doses,
+          piece: items.piece,
           originalPrice: items.originalPrice,
           image: items.image,
           discount: items.discount,
-          capsuleInfo: items.capsuleInfo,
+         
           description: items.description,
+
+         
         },
       };
       try {
